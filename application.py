@@ -1,16 +1,20 @@
 from flask import Flask, jsonify, request
 import json
 import yfinance as yf
+from flask_cors import CORS, cross_origin
 
 application = Flask(__name__)
+cors = CORS(application)
 
 stocks = ["SPY", "DOW", "FTMC", "AAPL", "LSE:TSCO", "MSCI", "GLD", "COWS"]
 
 @application.route('/api/stocks')
+@cross_origin()
 def getStockList():
 	return jsonify(stocks=stocks)
 
 @application.route('/api/stock/<ticker>')
+@cross_origin()
 def getStockInfo(ticker):
 	stock = yf.Ticker(ticker)
 
@@ -40,6 +44,7 @@ def getStockInfo(ticker):
 
 
 @application.route('/api/stock/<ticker>/<start_date>/<end_date>')
+@cross_origin()
 def getStockPrices(ticker, start_date, end_date):
 	stock_data_frame = yf.download(ticker, start_date, end_date)
 	stock_data_frame.reset_index(inplace=True)
@@ -55,6 +60,7 @@ def getStockPrices(ticker, start_date, end_date):
 
 
 @application.route('/api/compound/<start_date>/<end_date>')
+@cross_origin()
 def calculateStockReturns(start_date, end_date):
 	portfolio_input = request.args.get('portfolio')
 	portfolio_dict = json.loads(portfolio_input)
