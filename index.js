@@ -1,5 +1,7 @@
 darkModeOn = false;
 
+
+
 function darkMode(){
 	html = document.getElementById("global");
 	
