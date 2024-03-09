@@ -2,15 +2,15 @@ from flask import Flask, jsonify, request
 import json
 import yfinance as yf
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 stocks = ["SPY", "DOW", "FTMC", "AAPL", "LSE:TSCO", "MSCI", "GLD", "COWS"]
 
-@app.route('/api/stocks')
+@application.route('/api/stocks')
 def getStockList():
 	return jsonify(stocks=stocks)
 
-@app.route('/api/stock/<ticker>')
+@application.route('/api/stock/<ticker>')
 def getStockInfo(ticker):
 	stock = yf.Ticker(ticker)
 
@@ -39,7 +39,7 @@ def getStockInfo(ticker):
 
 
 
-@app.route('/api/stock/<ticker>/<start_date>/<end_date>')
+@application.route('/api/stock/<ticker>/<start_date>/<end_date>')
 def getStockPrices(ticker, start_date, end_date):
 	stock_data_frame = yf.download(ticker, start_date, end_date)
 	stock_data_frame.reset_index(inplace=True)
@@ -54,7 +54,7 @@ def getStockPrices(ticker, start_date, end_date):
 	return jsonify(data=retDict)
 
 
-@app.route('/api/compound/<start_date>/<end_date>')
+@application.route('/api/compound/<start_date>/<end_date>')
 def calculateStockReturns(start_date, end_date):
 	portfolio_input = request.args.get('portfolio')
 	portfolio_dict = json.loads(portfolio_input)
@@ -109,5 +109,5 @@ def calculateStockReturns(start_date, end_date):
 
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
-    # removed before deploying a production app.
-    app.run()
+    # removed before deploying a production application.
+    application.run()
