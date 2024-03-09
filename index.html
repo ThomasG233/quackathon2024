@@ -75,38 +75,6 @@
 	</div>
   </body>
 
-  	<script>
-		var dataArray = [];
-        async function getData()
-        {
-            var dataFromJSON = await fetch("http://hacakthonapi-env.eba-uyf3i8r3.us-east-1.elasticbeanstalk.com/api/stock/TSCO/2002-07-01/2002-08-01");
-
-            dataArray = await dataFromJSON.json();
-			dataArray = dataArray.data;
-			console.log(Object.values(dataArray));
-
-            ctx = document.getElementById('barChart');
-                new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(dataArray),
-                    datasets: [{
-                    label: '# of Votes',
-                    data: Object.values(dataArray),
-                    borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                    y: {
-                        beginAtZero: true
-                        }
-                    }
-                }
-            })
-        }
-		getData();
-	</script>
     <footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">
     <div class="container"><span class="text-body-secondary">© BlackRock 2024</span></div>
   </footer>
