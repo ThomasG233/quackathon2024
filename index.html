@@ -13,11 +13,9 @@
   
   <body class="">
     
-	<nav class="navbar bg-body-secondary">
-	  <div class="container-fluid px-5">
-		<a class="navbar-brand" href="#">
-		  BlackRock
-		</a>
+	<nav class="navbar bg-black" style="height:80px;">
+	  <div class="container px-5">
+		<img src="blackrock_logo.png" class="navbar-brand text-white" style="width:75px; height:75px;" alt="BlackRock Logo">
 	  </div>
 	</nav>
 	
@@ -79,7 +77,7 @@
 		var dataArray = [];
         async function getData()
         {
-            var dataFromJSON = await fetch("http://hacakthonapi-env.eba-uyf3i8r3.us-east-1.elasticbeanstalk.com/api/stock/TSCO/2002-07-01/2002-08-01");
+            var dataFromJSON = await fetch("http://apihack-env.eba-v8abcenj.us-east-1.elasticbeanstalk.com/api/stock/TSCO/2002-07-01/2023-07-01");
 
             dataArray = await dataFromJSON.json();
 			dataArray = dataArray.data;
@@ -88,26 +86,28 @@
             ctx = document.getElementById('barChart');
                 new Chart(ctx, {
                 type: 'line',
+				backgroundColor: '#36A2EB',
                 data: {
                     labels: Object.keys(dataArray),
                     datasets: [{
-                    label: '# of Votes',
-                    data: Object.values(dataArray),
-                    borderWidth: 1
+						label: 'Stock Value',
+						data: Object.values(dataArray),
+						borderWidth: 1,
+						backgroundColor: '#FF0000',
                     }]
                 },
                 options: {
                     scales: {
                     y: {
                         beginAtZero: true
-                        }
-                    }
+                        },
+                    },
                 }
             })
         }
 		getData();
 	</script>
-    <footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">
-    <div class="container"><span class="text-body-secondary">© BlackRock 2024</span></div>
+    <footer class="footer mt-auto py-3 bg-black">
+    <div class="container"><span class="text-secondary">© BlackRock 2024</span></div>
   </footer>
 </html>
