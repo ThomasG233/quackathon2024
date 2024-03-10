@@ -1,0 +1,53 @@
+<!doctype html>
+<html id="global" lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Blackrock Game</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+	<script src="https://kit.fontawesome.com/f9aef5e3e6.js" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	</head>
+	<body class="">
+	<nav class="navbar bg-body-secondary">
+		<div class="container-fluid px-5"><a class="navbar-brand" href="#"> BlackRock </a></div>
+	</nav>
+	<div><canvas id="currentPerformance"></canvas></div>
+	<div class="container-fluid px-5">
+		<h1>Current Date: <span id="currDate"></span>. Portfolio Value: £<span id="currValue"></span></h1>
+	</div>
+	<div class="container-fluid px-5">
+		<h4>Forward in time:</h4>
+		<div class="container-fluid px-5"><button type="button" class="btn btn-primary" onclick="moveForwardWithOffset(7, 0, 0);">Forward 1 Week</button><button type="button" class="btn btn-primary" onclick="moveForwardWithOffset(0, 1, 0);">Forward 1 Month</button><button type="button" class="btn btn-primary" onclick="moveForwardWithOffset(0, 0, 1);">Forward 1 Year</button><button type="button" class="btn btn-primary" onclick="moveForwardWithOffset(0, 0, 10);">Forward 10 Years</button></div>
+	</div>
+	<div class="container-fluid px-5">
+		<h4>Choose your Stocks:</h4>
+		<p class="text-danger" id="errorBox"></p>
+		<div class="container-fluid px-5">
+			<div class="row" id="stockContainer">
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="pastPerfModal" tabindex="-1" role="dialog" aria-labelledby="pastPerfModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="pastPerfModalLabel"></h5>
+			</div>
+			<canvas class="modal-body">
+			</canvas>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="index.js"></script>
+
+	</body>
+	</footer>
+</html>
