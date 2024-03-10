@@ -80,7 +80,7 @@ async function reloadBoard() {
 	data = data.data;
 
 	for(const entry of data) {
-		leaderBoard.innerHTML += `<li>${entry.name}: ${entry.ror}%</li>`;
+		leaderBoard.innerHTML += `<li class = "justify-content-center list-group-item list-group-item-warning"><strong>${entry.name}:</strong> ${entry.ror}%</li>`;
 	}
 }
 
