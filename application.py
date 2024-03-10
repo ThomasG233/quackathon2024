@@ -6,7 +6,26 @@ from flask_cors import CORS, cross_origin
 application = Flask(__name__)
 cors = CORS(application)
 
-stocks = ["SPY", "DOW", "FTMC", "AAPL", "LSE:TSCO", "MSCI", "GLD", "COWS"]
+stocks = {"SPY": "Description TODO", "DOW": "Description TODO", "FTMC": "Description TODO", "AAPL": "Description TODO", "LSE:TSCO": "Description TODO", "MSCI": "Description TODO", "GLD": "Description TODO", "COWS": "Description TODO"}
+
+leaderboard = []
+
+@application.route('/api/addToBoard/<name>/<yourPerf>')
+@cross_origin()
+def addToLeaderboard(name, yourPerf):
+	for i in range(len(leaderboard)):
+		if yourPerf > leaderboard[i]["ror"]:
+			leaderboard[i] = {"name": name, "ror": yourPerf}
+	if len(leaderboard) <= 5:
+		leaderboard.append({"name": name, "ror": yourPerf})
+		return ""
+	return ""
+
+@application.route('/api/leaderboard')
+@cross_origin()
+def getLeaderboard():
+	return jsonify(data=leaderboard)
+
 
 @application.route('/api/stocks')
 @cross_origin()
@@ -54,7 +73,7 @@ def getStockPrices(ticker, start_date, end_date):
 
 	retDict = {}
 	for stock in stock_list:
-		retDict[stock["Date"]] = stock["Close"]
+		retDict[stock["Date"]] = int(round(stock["Close"], 2) * 100)
 
 	return jsonify(data=retDict)
 
@@ -103,7 +122,7 @@ def calculateStockReturns(start_date, end_date):
 		dictForDate = {}
 		for ticker in tickers:
 			price = prices[ticker].loc[index]["Close"]
-			position_value = (price * numSharesBought[ticker]) / currencyData[ticker].loc[index]["Close"]
+			position_value = int((price * numSharesBought[ticker]) / currencyData[ticker].loc[index]["Close"])
 			total += position_value
 			dictForDate[ticker] = position_value
 		dictForDate["total"] = total
