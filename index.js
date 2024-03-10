@@ -30,7 +30,7 @@ const performanceChart = new Chart(document.getElementById("currentPerformance")
 		}
 	})
 
-let buyInPrices = {};
+
 
 function darkMode(){
 	html = document.getElementById("global");
@@ -77,7 +77,7 @@ function getPortfolio() {
 		let ticker = card.querySelector(".ticker").innerHTML;
 		let value = card.querySelector(".holdingValue").value;
 		let outVal = parseFloat(value);
-		if(isNaN(outVal) || outVal == 0) {
+		if(isNaN(outVal) || outVal <= 0) {
 			continue;
 		}
 		ret[ticker] = parseInt(outVal * 100);
@@ -90,25 +90,21 @@ function setPortfolio(newPortfolio) {
 	for(const card of stockContainer.children) {
 		let ticker = card.querySelector(".ticker").innerHTML;
 		if(!(ticker in newPortfolio)) {
-			if(ticker in buyInPrices) {
-				delete buyInPrices[ticker];
-			}
 			continue;
 		}
 		if(!(ticker in boughtStocks)) {
 			boughtStocks.push(ticker);
 		}
+		const currAmount = parseInt(parseFloat(card.querySelector(".holdingValue").value) * 100);
 		const newAmount = parseInt(newPortfolio[ticker]);
-		if(!(ticker in buyInPrices)) {
-			buyInPrices[ticker] = parseInt(card.querySelector(".holdingValue").value) * 100;
-		}
+
 		card.querySelector(".holdingValue").value = `${newAmount/100}`;
-		if(buyInPrices[ticker] > newAmount) {
-			card.querySelector(".percentage").innerHTML = `<i class="fa-solid fa-angle-down" style="color: red;"></i> ${percDiff(buyInPrices[ticker], newAmount).toFixed(2)}%`;
+		if(currAmount > newAmount) {
+			card.querySelector(".percentage").innerHTML = `<i class="fa-solid fa-angle-down" style="color: red;"></i> ${percDiff(currAmount, newAmount).toFixed(2)}%`;
 			card.querySelector(".percentage").style.color = "red";
 		}
 		else {
-			card.querySelector(".percentage").innerHTML = `<i class="fa-solid fa-angle-up" style="color: #00b006;"></i> ${percDiff(buyInPrices[ticker], newAmount).toFixed(2)}%`;
+			card.querySelector(".percentage").innerHTML = `<i class="fa-solid fa-angle-up" style="color: #00b006;"></i> ${percDiff(currAmount, newAmount).toFixed(2)}%`;
 			card.querySelector(".percentage").style.color = "#00b006";
 		}
 	}
@@ -150,6 +146,10 @@ async function moveForward(newDate) {
 	if(Object.keys(currPortfolio).length == 0) {
 		setDate(newDate);
 		setValue(currValue);
+		if(shouldRedirect) {
+			window.open(`results.html?bought=${JSON.stringify(boughtStocks)}&startDate=${getAPIDate(startDate, false)}&data=${getDataset()}`,"_self");
+			return;
+		}
 		return;
 	}
 
@@ -227,7 +227,7 @@ async function startGame() {
 				<div class="card-body">
 				<div class="row">
 					<h5 class="card-title col ticker">${ticker}</h5>
-					<p class="col percentage w-100" style="color: #00b006;"><i class="fa-solid fa-angle-up" style="color: #00b006;"></i> 0.00%</p>
+					<p class="col percentage w-100" style="color: #00b006;"></p>
 				</div>
 				<p class="card-subtitle mb-2 text-body-secondary">${data[ticker]}</p>
 				<div class="input-group mb-3"><span class="input-group-text">£</span><input type="text" class="form-control holdingValue" aria-label="Amount"></div>

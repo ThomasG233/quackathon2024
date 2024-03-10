@@ -67,6 +67,7 @@ const resultsChart = new Chart(document.getElementById("resultsChart"), {
 				beginAtZero: true
 				},
 			},
+			responsive: true
 		}
 	})
 
