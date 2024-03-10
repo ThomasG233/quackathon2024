@@ -25,6 +25,8 @@ const performanceChart = new Chart(document.getElementById("currentPerformance")
 				beginAtZero: true
 				},
 			},
+			maintainAspectRatio: false,
+			responsive: true
 		}
 	})
 
@@ -181,13 +183,21 @@ async function moveForward(newDate) {
 
 }
 
-
+var isRunning = false;
 async function moveForwardWithOffset(day, month, year) {
+	if(isRunning) {
+		return;
+	}
+	isRunning = true;
 	let newDate = new Date(currDate);
 	newDate.setDate(newDate.getDate() + day);
 	newDate.setMonth(newDate.getMonth() + month);
 	newDate.setFullYear(newDate.getFullYear() + year);
+	try {
 	await moveForward(newDate);
+	}
+	catch(e) {}
+	isRunning = false;
 }
 
 async function startGame() {
@@ -215,15 +225,15 @@ async function startGame() {
 	const stockContainer = document.getElementById("stockContainer");
 	for(const ticker of Object.keys(data)) {
 		stockContainer.innerHTML += 
-			`<div class="card" style="width: 18rem;">
+			`<div class="card mx-5 my-3" style="width: 18rem;">
 				<div class="card-body">
 				<div class="row">
 					<h5 class="card-title col ticker">${ticker}</h5>
-					<p class="col percentage" style="color: #00b006;"><i class="fa-solid fa-angle-up" style="color: #00b006;"></i> 0.00%</p>
+					<p class="col percentage w-100" style="color: #00b006;"><i class="fa-solid fa-angle-up" style="color: #00b006;"></i> 0.00%</p>
 				</div>
 				<p class="card-subtitle mb-2 text-body-secondary">${data[ticker]}</p>
 				<div class="input-group mb-3"><span class="input-group-text">£</span><input type="text" class="form-control holdingValue" aria-label="Amount"></div>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pastPerfModal" data-bs-ticker="${ticker}">Past Performance</button></div>
+				<button type="button" class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#pastPerfModal" data-bs-ticker="${ticker}">Past Performance</button></div>
 				</div>
 			</div>`;
 	}
@@ -269,6 +279,7 @@ $('#pastPerfModal').on('show.bs.modal', async function (event) {
 				beginAtZero: true
 				},
 			},
+
 		}
 	})
 
