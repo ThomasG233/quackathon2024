@@ -10,11 +10,20 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     </head>
     <body class="">
-        <nav class="navbar bg-black">
-            <div class="container px-5">
-				<a href = "index.html"><img src="blackrock_logo.png" style="width:75px; height: 75px;"></a>
+        <nav class="navbar navbar-expand-lg bg-black px-5">
+			<div class = "container">
+				<a href = "index.html" class="navbar-brand"><img src="blackrock_logo.png" style="width:75px; height: 75px;"></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				  </button>
+				<div class="collapse navbar-collapse">
+					<div class="navbar-nav">
+						<a class="nav-link text-light" href="index.html"><strong>Game</strong></a>
+						<a class="nav-link active text-light" aria-current="page" href="calculator.html"><strong>Calculator</strong></a>
+					</div>
+				</div>
 			</div>
-        </nav>
+		</nav>
 		<div class = "container">
 			<h2 class = "text-center mt-3"><strong>How did you do?</strong></h2>
         	<div><canvas id="resultsChart"></canvas></div>

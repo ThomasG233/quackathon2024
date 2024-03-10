@@ -130,12 +130,12 @@ async function genPage() {
 	const numYears = diff_years(new Date(params.get('startDate')), new Date());
 
 
-	yourPerf = (percDiff(userData[keys[0]], userData[finalGoodKey])/numYears).toFixed(2);
+	yourPerf = (percDiff(userData[keys[0]], userData[finalGoodKey])/numYears);
 
-	const spyPerf = (percDiff(data[keys[0]].SPY, data[finalGoodKey].SPY)/numYears).toFixed(2);
-	document.getElementById("avgPerformance").innerHTML = yourPerf;
+	const spyPerf = (percDiff(data[keys[0]].SPY, data[finalGoodKey].SPY)/numYears);
+	document.getElementById("avgPerformance").innerHTML = yourPerf.toFixed(2);
 
-	document.getElementById("SPYPerformance").innerHTML = spyPerf;
+	document.getElementById("SPYPerformance").innerHTML = spyPerf.toFixed(2);
 
 	if(spyPerf > yourPerf) {
 		document.getElementById("resultSentance").innerHTML = "You would've been better off just buying SPY!";
@@ -143,6 +143,8 @@ async function genPage() {
 	else {
 		document.getElementById("resultSentance").innerHTML = "You achieved better results than 87% of professional stock pickers. Could you do it again?";
 	}
+
+	document.getElementById("resultSentance").innerHTML += ` Now you know a bit about investing, perhaps you should try our <a href="calculator.html">investment calculator!</a>`;
 
 	await reloadBoard();
 
