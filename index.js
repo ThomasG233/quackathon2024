@@ -215,8 +215,6 @@ async function startGame() {
 
 	setValue(10000);
 
-
-
 	startDate = currDate;
 	const url = "http://apihack-env.eba-v8abcenj.us-east-1.elasticbeanstalk.com/api/stocks";
 	const query = await fetch(url);
@@ -259,7 +257,6 @@ $('#pastPerfModal').on('show.bs.modal', async function (event) {
 
 	dataArray = await dataFromJSON.json();
 	dataArray = dataArray.data;
-
 
 	ppChart = new Chart(body[0], {
 		type: 'line',
